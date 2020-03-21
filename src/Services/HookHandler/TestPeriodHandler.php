@@ -4,7 +4,6 @@ namespace App\Services\HookHandler;
 
 use App\Entity\Amo\AmoData;
 use App\Entity\Amo\AmoStatus;
-use App\Entity\Google\EventAnalytics;
 use App\Services\Google\AnalyticsFacade;
 use App\Services\Google\AnalyticsFactory;
 use DateTimeInterface;
@@ -14,7 +13,7 @@ use Exception;
  * Class NewLeadHandler
  * @package App\Services\HookHandler
  */
-class NewLeadHandler extends AbstractHookHandler
+class TestPeriodHandler extends AbstractHookHandler
 {
     const LONG_TIME_PERIOD = 25;
 
@@ -46,9 +45,9 @@ class NewLeadHandler extends AbstractHookHandler
     public function handle(AmoData $data): void
     {
         // Если статус сменился с новый на любой другой
-        if ($data->getOldStatus()->getTitle() == AmoStatus::STATUS_NEW_LEAD) {
+        if ($data->getOldStatus()->getTitle() == AmoStatus::STATUS_TEST_PERIOD) {
             $isLongTime = $this->isLongTime($data->getCreateTime(), $data->getSendTime());
-            $analytics = $this->factory->newAnalytics($data, EventAnalytics::CATEGORY_NEW_LEAD, $isLongTime);
+            $analytics = $this->factory->newLead($data, $isLongTime);
             $this->facade->send($analytics);
         }
 
