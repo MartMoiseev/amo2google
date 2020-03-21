@@ -14,7 +14,7 @@ use Exception;
  * Class NewLeadHandler
  * @package App\Services\HookHandler
  */
-class NewLeadHandler extends AbstractHookHandler
+class TestPeriodHandler extends AbstractHookHandler
 {
     const LONG_TIME_PERIOD = 25;
 
@@ -45,10 +45,10 @@ class NewLeadHandler extends AbstractHookHandler
      */
     public function handle(AmoData $data): void
     {
-        // Если статус сменился с новый на любой другой
-        if ($data->getOldStatus()->getTitle() == AmoStatus::STATUS_NEW_LEAD) {
+        // Если статус сменился на тестовый период
+        if ($data->getStatus()->getTitle() == AmoStatus::STATUS_TEST_PERIOD) {
             $isLongTime = $this->isLongTime($data->getCreateTime(), $data->getSendTime());
-            $analytics = $this->factory->newAnalytics($data, EventAnalytics::CATEGORY_NEW_LEAD, $isLongTime);
+            $analytics = $this->factory->newAnalytics($data, EventAnalytics::CATEGORY_TEST_PERIOD, $isLongTime);
             $this->facade->send($analytics);
         }
 

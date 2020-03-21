@@ -38,6 +38,11 @@ class HookHandlerFactory
      */
     public function create(): HookHandlerInterface
     {
-        return new NewLeadHandler($this->facade, $this->factory);
+        $newLead = new NewLeadHandler($this->facade, $this->factory);
+        $testPeriod = new TestPeriodHandler($this->facade, $this->factory);
+
+        $newLead->setNext($testPeriod);
+
+        return $newLead;
     }
 }

@@ -16,20 +16,21 @@ class AnalyticsFactory
 {
     /**
      * @param AmoData $data
+     * @param string $eventCategory
      * @param bool $isLongTime
      * @return BasicAnalytics
      */
-    public function newLead(AmoData $data, bool $isLongTime): BasicAnalytics
+    public function newAnalytics(AmoData $data, string $eventCategory, bool $isLongTime): BasicAnalytics
     {
         $utm = $data->getUtm();
         $basic = new BasicAnalytics($utm->getClientId(), $this->getNonInteractionHit($isLongTime));
 
         $basic->setEvent(
             new EventAnalytics(
-                EventAnalytics::CATEGORY_NEW_LEAD,
+                $eventCategory,
                 $this->getEventAction($utm),
                 $this->getEventLabel($data),
-                null
+                $this->getPrice($data, $eventCategory)
             )
         );
 
@@ -38,6 +39,20 @@ class AnalyticsFactory
         }
 
         return $basic;
+    }
+
+    /**
+     * @param AmoData $data
+     * @param string $eventCategory
+     * @return string|null
+     */
+    private function getPrice(AmoData $data, string $eventCategory): ?string
+    {
+        if ($eventCategory == EventAnalytics::CATEGORY_PAID_ONE_MONTH) {
+            return $data->getPrice();
+        }
+
+        return null;
     }
 
     /**
