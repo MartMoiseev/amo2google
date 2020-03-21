@@ -5,6 +5,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     google.tracker_id: '%env(TRACKING_ID)%'
+    amo.status.new_lead: '%env(STATUS_NEW_LEAD)%'
+    amo.status.test_period: '%env(STATUS_TEST_PERIOD)%'
+    amo.status.paid_one_month: '%env(STATUS_PAID_ONE_MONTH)%'
 
 services:
     # default configuration for services in *this* file
@@ -26,3 +29,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\EventListener\LeadsStatusListener:
+        tags:
+            - { name: kernel.event_listener, event: hook.leads.status }

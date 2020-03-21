@@ -8,6 +8,10 @@ namespace App\Entity\Google;
  */
 class EventAnalytics
 {
+    const CATEGORY_NEW_LEAD = 'new_lead';
+    const CATEGORY_TEST_PERIOD = 'test_period';
+    const CATEGORY_PAID_ONE_MONTH = 'paid_one_month';
+
     /**
      * “new_lead” - по статусу новая заявка
      * “test_period” - по статусу тестовый период
@@ -36,7 +40,7 @@ class EventAnalytics
      * присваивать значения по статусу оплачен 1 месяц, с поля “Бюджет “,
      * если это другой статус этот параметр не использовать в запросе.
      *
-     * @var string
+     * @var string|null
      */
     private $value;
 
@@ -47,7 +51,7 @@ class EventAnalytics
      * @param string $label
      * @param string $value
      */
-    public function __construct(string $category, string $action, string $label, string $value)
+    public function __construct(string $category, string $action, string $label, ?string $value)
     {
         $this->category = $category;
         $this->action = $action;
@@ -80,9 +84,9 @@ class EventAnalytics
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }
