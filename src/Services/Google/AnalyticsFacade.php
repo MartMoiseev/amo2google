@@ -66,8 +66,12 @@ class AnalyticsFacade
         $this->analytics
             ->setEventCategory($eventAnalytics->getCategory())
             ->setEventAction($eventAnalytics->getAction())
-            ->setEventLabel($eventAnalytics->getLabel())
-            ->setEventValue($eventAnalytics->getValue());
+            ->setEventLabel($eventAnalytics->getLabel());
+
+        // Только для статуса paid_one_month
+        if ($eventAnalytics->getValue()) {
+            $this->analytics->setEventValue($eventAnalytics->getValue());
+        }
     }
 
     /**
