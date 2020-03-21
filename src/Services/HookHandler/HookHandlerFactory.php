@@ -40,7 +40,9 @@ class HookHandlerFactory
     {
         $newLead = new NewLeadHandler($this->facade, $this->factory);
         $testPeriod = new TestPeriodHandler($this->facade, $this->factory);
+        $paidOneMonth = new PaidOneMonthHandler($this->facade, $this->factory);
 
+        $testPeriod->setNext($paidOneMonth);
         $newLead->setNext($testPeriod);
 
         return $newLead;
