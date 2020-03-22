@@ -47,6 +47,17 @@ class PaidOneMonthHandler extends AbstractHookHandler
     {
         // Если статус сменился на оплачен 1 месяц
         if ($data->getStatus()->getTitle() == AmoStatus::STATUS_PAID_ONE_MONTH) {
+
+            // Если перескочили через тестовый период
+            if ($data->getOldStatus()->getTitle() != AmoStatus::STATUS_TEST_PERIOD) {
+
+                // Отправляем пропущенный тестовый период
+                $isLongTime = $this->isLongTime($data->getCreateTime(), $data->getSendTime());
+                $analytics = $this->factory->newAnalytics($data, EventAnalytics::CATEGORY_TEST_PERIOD, $isLongTime);
+                $this->facade->send($analytics);
+            }
+
+            // Отправляем оплачен 1 месяц
             $isLongTime = $this->isLongTime($data->getCreateTime(), $data->getSendTime());
             $analytics = $this->factory->newAnalytics($data, EventAnalytics::CATEGORY_PAID_ONE_MONTH, $isLongTime);
             $this->facade->send($analytics);
