@@ -93,4 +93,17 @@ class BasicAnalytics
     {
         $this->campaign = $campaign;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'clientId' => $this->clientId,
+            'event' => $this->event ? $this->event->toArray() : null,
+            'campaign' => $this->campaign ? $this->campaign->toArray() : null,
+            'nonInteractionHit' => $this->nonInteractionHit,
+        ];
+    }
 }

@@ -105,4 +105,18 @@ class CampaignAnalytics
     {
         return $this->content;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'source' => $this->source,
+            'medium' => $this->medium,
+            'name' => $this->name,
+            'keyword' => $this->keyword,
+            'content' => $this->content,
+        ];
+    }
 }

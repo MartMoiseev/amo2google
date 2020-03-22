@@ -5,8 +5,10 @@ namespace App\Services\Google;
 use App\Entity\Google\BasicAnalytics;
 use App\Entity\Google\CampaignAnalytics;
 use App\Entity\Google\EventAnalytics;
+use App\Event\Google\AnalyticsSendEvent;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
@@ -21,11 +23,18 @@ class AnalyticsFacade
     private $analytics;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
+
+    /**
      * AnalyticsFacade constructor.
      * @param ParameterBagInterface $params
+     * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct(ParameterBagInterface $params)
+    public function __construct(ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
+        $this->dispatcher = $dispatcher;
         $this->analytics = new Analytics();
 
         $this->analytics
@@ -56,6 +65,9 @@ class AnalyticsFacade
         if ($response->getHttpStatusCode() !== 200) {
             throw new Exception('Google analytics send error!');
         }
+
+        $event = new AnalyticsSendEvent($basicAnalytics, $this->analytics->getUrl());
+        $this->dispatcher->dispatch($event, AnalyticsSendEvent::NAME);
     }
 
     /**
