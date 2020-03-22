@@ -33,3 +33,7 @@ services:
     App\EventListener\LeadsStatusListener:
         tags:
             - { name: kernel.event_listener, event: hook.leads.status }
+
+    App\EventListener\LoggerListener:
+        tags:
+            - { name: kernel.event_listener, event: !php/const App\Event\Google\AnalyticsSendEvent::NAME }

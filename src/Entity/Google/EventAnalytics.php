@@ -90,4 +90,17 @@ class EventAnalytics
     {
         return $this->value;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'category' => $this->category,
+            'action' => $this->action,
+            'label' => $this->label,
+            'value' => $this->value
+        ];
+    }
 }
