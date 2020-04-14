@@ -41,7 +41,7 @@ class FieldsConverter
         $price = $this->get('price', $fields);
 
         $status = $this->statusService->create($this->get('status_id', $fields));
-        $oldStatus = $this->statusService->create($this->get('old_status_id', $fields));
+        $oldStatus = $this->statusService->create($this->get('old_status_id', $fields, 0));
 
         $createTime = new DateTime('@' . $this->get('date_create', $fields));
         $updateTime = new DateTime('@' . $this->get('last_modified', $fields));
@@ -60,7 +60,7 @@ class FieldsConverter
      */
     private function get(string $name, array $array, $default = ''): string
     {
-        return isset($array[$name]) ? $array[$name] : $default;
+        return !empty($array[$name]) ? $array[$name] : $default;
     }
 
     /**
