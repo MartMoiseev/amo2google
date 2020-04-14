@@ -63,8 +63,23 @@ class NewLeadHandler extends AbstractHookHandler
      */
     public function handle(AmoData $data): void
     {
-        // Если статус сменился с новый на любой другой и заявка не была отправлена ранее
-        if ($data->getOldStatus()->getTitle() == AmoStatus::STATUS_NEW_LEAD and !$this->isSend($data)) {
+        // Если статус сменился с новый на любой другой
+        if ($data->getOldStatus()->getTitle() == AmoStatus::STATUS_NEW_LEAD) {
+            $this->sendNew($data);
+        }
+
+        if ($this->next) {
+            $this->next->handle($data);
+        }
+    }
+
+    /**
+     * @param AmoData $data
+     * @throws Exception
+     */
+    public function sendNew(AmoData $data): void
+    {
+        if (!$this->isSend($data)) {
             // отправляем заявку
             $isLongTime = $this->isLongTime($data->getCreateTime(), $data->getSendTime());
             $analytics = $this->factory->newAnalytics($data, EventAnalytics::CATEGORY_NEW_LEAD, $isLongTime);
@@ -72,10 +87,6 @@ class NewLeadHandler extends AbstractHookHandler
 
             // обновляем статус заявки, если она была ранее создана
             $this->closeNewOrder($data);
-        }
-
-        if ($this->next) {
-            $this->next->handle($data);
         }
     }
 
