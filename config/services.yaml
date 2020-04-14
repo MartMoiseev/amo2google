@@ -9,6 +9,13 @@ parameters:
     amo.status.test_period: '%env(STATUS_TEST_PERIOD)%'
     amo.status.paid_one_month: '%env(STATUS_PAID_ONE_MONTH)%'
 
+    amo.utm.source: '%env(UTM_SOURCE_ID)%'
+    amo.utm.medium: '%env(UTM_MEDIUM_ID)%'
+    amo.utm.campaign: '%env(UTM_CAMPAIGN_ID)%'
+    amo.utm.content: '%env(UTM_CONTENT_ID)%'
+    amo.utm.term: '%env(UTM_TERM_ID)%'
+    amo.client_id: '%env(CLIENT_ID)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:

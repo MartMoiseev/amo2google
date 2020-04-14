@@ -8,6 +8,7 @@ use App\Entity\Amo\AmoUtm;
 use App\Exception\NoCustomFieldsException;
 use DateTime;
 use Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * Class HookRegisterService
@@ -21,12 +22,19 @@ class FieldsConverter
     private $statusService;
 
     /**
+     * @var ParameterBagInterface
+     */
+    private $parameterBag;
+
+    /**
      * FieldsConverter constructor.
      * @param StatusService $statusService
+     * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(StatusService $statusService)
+    public function __construct(StatusService $statusService, ParameterBagInterface $parameterBag)
     {
         $this->statusService = $statusService;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -74,12 +82,12 @@ class FieldsConverter
             $utmFields = $this->parseCustomFields($fields['custom_fields']);
 
             return new AmoUtm(
-                $this->get('utm_source', $utmFields),
-                $this->get('utm_medium', $utmFields),
-                $this->get('utm_campaign', $utmFields),
-                $this->get('utm_content', $utmFields),
-                $this->get('utm_term', $utmFields),
-                $this->get('clientId', $utmFields)
+                $this->get($this->parameterBag->get('amo.utm.source'), $utmFields),
+                $this->get($this->parameterBag->get('amo.utm.medium'), $utmFields),
+                $this->get($this->parameterBag->get('amo.utm.campaign'), $utmFields),
+                $this->get($this->parameterBag->get('amo.utm.content'), $utmFields),
+                $this->get($this->parameterBag->get('amo.utm.term'), $utmFields),
+                $this->get($this->parameterBag->get('amo.client_id'), $utmFields)
             );
         }
 
@@ -98,7 +106,7 @@ class FieldsConverter
         $array = [];
 
         foreach ($customFields as $field) {
-            $name = $this->get('name', $field);
+            $name = $this->get('id', $field);
             $value = isset($field['values'][0]['value']) ? $field['values'][0]['value'] : '';
 
             $array[$name] = $value;
