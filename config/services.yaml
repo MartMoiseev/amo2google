@@ -34,6 +34,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: hook.leads.status }
 
+    App\EventListener\LeadsAddListener:
+        tags:
+            - { name: kernel.event_listener, event: hook.leads.add }
+
     App\EventListener\LoggerListener:
         tags:
             - { name: kernel.event_listener, event: !php/const App\Event\Google\AnalyticsSendEvent::NAME }

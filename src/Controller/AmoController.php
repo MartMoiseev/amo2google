@@ -6,7 +6,6 @@ use App\Entity\Google\BasicAnalytics;
 use App\Entity\Google\CampaignAnalytics;
 use App\Entity\Google\EventAnalytics;
 use App\Entity\HookLog;
-use App\Services\HookHandler\HookHandlerFactory;
 use App\Services\Amo\HookRegisterService;
 use App\Services\Google\AnalyticsFacade;
 use DateTime;
@@ -57,7 +56,7 @@ class AmoController extends AbstractController
     {
         $request = '{"leads":{"update":[{"id":"1473787","name":"\u041a\u0443\u043f\u0438\u0442\u044c \u0447\u0430\u0439","status_id":"32115415","old_status_id":"","price":"50","responsible_user_id":"5895529","last_modified":"1583659939","modified_user_id":"5895529","created_user_id":"5895529","date_create":"1583659885","pipeline_id":"3138481","account_id":"28825597","created_at":"1583659885","updated_at":"1583659939"}]},"account":{"subdomain":"spiritvl","id":"28825597","_links":{"self":"https:\/\/spiritvl.amocrm.ru"}}}';
         $request = '';
-        $request = '{"leads":{"status":[{"id":"3217759","name":"\u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430","status_id":"32310367","old_status_id":"32310529","price":"150","responsible_user_id":"5926249","last_modified":"1584793915","modified_user_id":"5926249","created_user_id":"5926249","date_create":"1584793093","pipeline_id":"3166297","account_id":"28841227","custom_fields":[{"id":"185989","name":"utm_source","values":[{"value":"google"}]},{"id":"186003","name":"utm_medium","values":[{"value":"cpc"}]},{"id":"186007","name":"utm_campaign","values":[{"value":"(none)"}]},{"id":"186011","name":"utm_content","values":[{"value":"(none)"}]},{"id":"186013","name":"utm_term","values":[{"value":"(none)"}]},{"id":"186015","name":"clientId","values":[{"value":"421960192.1547848071"}]}],"created_at":"1584793093","updated_at":"1584793915"}]},"account":{"subdomain":"miwejag132","id":"28841227","_links":{"self":"https:\/\/miwejag132.amocrm.ru"}}}';
+        $request = '{"leads":{"add":[{"id":"1328501","name":"\u0417\u0430\u044f\u0432\u043a\u0430","status_id":"32637415","old_status_id":"","price":"666","responsible_user_id":"5956807","last_modified":"1586881257","modified_user_id":"5956807","created_user_id":"5956807","date_create":"1586881257","pipeline_id":"3212881","account_id":"28856890","custom_fields":[{"id":"101417","name":"utm_source","values":[{"value":"youtube"}]},{"id":"101419","name":"utm_medium","values":[{"value":"smm"}]},{"id":"101421","name":"utm_campaign","values":[{"value":"video"}]},{"id":"101423","name":"utm_content","values":[{"value":"TestFontactForm"}]},{"id":"101425","name":"utm_term","values":[{"value":"newutmtango"}]},{"id":"101427","name":"clientId","values":[{"value":"1472380254.1514978721"}]}],"created_at":"1586881257","updated_at":"1586881257"}]},"account":{"subdomain":"someorg","id":"28856890","_links":{"self":"https:\/\/someorg.amocrm.ru"}}}';
 
         $registerService->register($request, new DateTime());
 
