@@ -45,6 +45,7 @@ class NewLeadTimeoutHandler
 
         $order->setOrderId($fields['id']);
         $order->setData($fields);
+        $order->setIsSend(false);
         $order->setSendTime($this->getSendTime());
 
         $this->manager->persist($order);

@@ -31,6 +31,11 @@ class NewOrder
      */
     private $data = [];
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isSend;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class NewOrder
     public function setData(array $data): self
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    public function getIsSend(): ?bool
+    {
+        return $this->isSend;
+    }
+
+    public function setIsSend(bool $isSend): self
+    {
+        $this->isSend = $isSend;
 
         return $this;
     }
