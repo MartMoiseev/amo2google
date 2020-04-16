@@ -15,6 +15,7 @@ parameters:
     amo.utm.content: '%env(UTM_CONTENT_ID)%'
     amo.utm.term: '%env(UTM_TERM_ID)%'
     amo.client_id: '%env(CLIENT_ID)%'
+    amo.old.leads: '%env(OLD_LEADS)%'
 
 services:
     # default configuration for services in *this* file
