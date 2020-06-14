@@ -3,7 +3,6 @@
 namespace App\Services\Amo;
 
 use App\Entity\Amo\AmoData;
-use App\Entity\Amo\AmoStatus;
 use App\Entity\Amo\AmoUtm;
 use App\Exception\NoCustomFieldsException;
 use DateTime;
@@ -51,9 +50,9 @@ class FieldsConverter
         $status = $this->statusService->create($this->get('status_id', $fields));
         $oldStatus = $this->statusService->create($this->get('old_status_id', $fields, 0));
 
-        $createTime = new DateTime('@' . $this->get('date_create', $fields));
-        $updateTime = new DateTime('@' . $this->get('last_modified', $fields));
-        $sendTime = new DateTime();
+        $createTime = new DateTime('@' . $this->get('date_create', $fields), new \DateTimeZone('Europe/Kiev'));
+        $updateTime = new DateTime('@' . $this->get('last_modified', $fields), new \DateTimeZone('Europe/Kiev'));
+        $sendTime = new DateTime('', new \DateTimeZone('Europe/Kiev'));
 
         $utm = $this->getUtm($fields);
 
