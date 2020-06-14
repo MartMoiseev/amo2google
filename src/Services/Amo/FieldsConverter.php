@@ -50,8 +50,12 @@ class FieldsConverter
         $status = $this->statusService->create($this->get('status_id', $fields));
         $oldStatus = $this->statusService->create($this->get('old_status_id', $fields, 0));
 
-        $createTime = new DateTime('@' . $this->get('date_create', $fields), new \DateTimeZone('Europe/Kiev'));
-        $updateTime = new DateTime('@' . $this->get('last_modified', $fields), new \DateTimeZone('Europe/Kiev'));
+        $createTime = new DateTime('@' . $this->get('date_create', $fields));
+        $createTime->setTimeZone(new \DateTimeZone('Europe/Kiev'));
+
+        $updateTime = new DateTime('@' . $this->get('last_modified', $fields));
+        $createTime->setTimeZone(new \DateTimeZone('Europe/Kiev'));
+
         $sendTime = new DateTime('', new \DateTimeZone('Europe/Kiev'));
 
         $utm = $this->getUtm($fields);
