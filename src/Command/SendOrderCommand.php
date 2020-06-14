@@ -66,6 +66,8 @@ class SendOrderCommand extends Command
     }
 
     /**
+     * @deprecated Not needed!
+     *
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
